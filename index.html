@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lizzy's Portfolio</title>
+
+  <style>
+    :root {
+      --camel-coat: #C6B39A;
+      --boho: #7B694E;
+      --rubine: #6D3A3C;
+      --tamarind: #361319;
+      --italian-roast: #280B0F;
+
+      --bg: #f4ede6;
+      --bg-soft: #efe4d7;
+      --text: #2c1716;
+      --text-soft: #5d4340;
+      --card: rgba(255, 248, 242, 0.78);
+      --border: rgba(54, 19, 25, 0.16);
+      --shadow: 0 18px 50px rgba(40, 11, 15, 0.16);
+      --accent: var(--rubine);
+      --accent-2: var(--boho);
+      --header-glass: rgba(255, 247, 241, 0.72);
+    }
+
+    body.dark {
+      --bg: #16080c;
+      --bg-soft: #221014;
+      --text: #f1e7de;
+      --text-soft: #d2bfb0;
+      --card: rgba(54, 19, 25, 0.76);
+      --border: rgba(198, 179, 154, 0.18);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --accent: var(--camel-coat);
+      --accent-2: #b89483;
+      --header-glass: rgba(40, 11, 15, 0.72);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background:
+        radial-gradient(circle at top left, rgba(198, 179, 154, 0.30), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(109, 58, 60, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--bg), var(--bg-soft));
+      color: var(--text);
+      transition: background 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      z-index: -2;
+      pointer-events: none;
+      animation: blobFloat 12s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      top: -120px;
+      left: -120px;
+      background: var(--camel-coat);
+    }
+
+    body::after {
+      right: -140px;
+      bottom: -120px;
+      background: var(--rubine);
+      animation-delay: 2s;
+    }
+
+    @keyframes blobFloat {
+      from {
+        transform: translateY(0) translateX(0) scale(1);
+      }
+      to {
+        transform: translateY(35px) translateX(25px) scale(1.08);
+      }
+    }
+
+    .page-wipe {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, var(--italian-roast), var(--rubine), var(--camel-coat));
+      z-index: 9999;
+      transform: scaleY(1);
+      transform-origin: top;
+      animation: wipeOut 1.3s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+    }
+
+    @keyframes wipeOut {
+      0% {
+        transform: scaleY(1);
+      }
+      60% {
+        transform: scaleY(1);
+      }
+      100% {
+        transform: scaleY(0);
+      }
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 4px 4px, 4px 4px;
+      mix-blend-mode: soft-light;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: var(--header-glass);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      gap: 20px;
+    }
+
+    .brand {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-right a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1rem;
+      transition: 0.25s ease;
+      position: relative;
+    }
+
+    .nav-right a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-right a:hover::after {
+      width: 100%;
+    }
+
+    .toggle-btn {
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--camel-coat), var(--boho));
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 0.95rem;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    main {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 88px 0;
+      position: relative;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-left {
+      animation: slideUp 1s ease both;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(109, 58, 60, 0.12);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      letter-spacing: 0.4px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.95;
+      margin-bottom: 16px;
+      color: var(--tamarind);
+    }
+
+    body.dark .hero h1 {
+      color: #f4dccc;
+    }
+
+    .typed-wrap {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 22px;
+      min-height: 34px;
+      font-weight: bold;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: var(--text-soft);
+      max-width: 640px;
+      margin-bottom: 26px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rubine), var(--tamarind));
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.01);
+    }
+
+    .mini-info {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 14px;
+      max-width: 650px;
+    }
+
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .mini-card h4 {
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 0.97rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      animation: slideUp 1.2s ease both;
+    }
+
+    .photo-frame {
+      width: min(410px, 100%);
+      padding: 18px;
+      border-radius: 36px;
+      background: linear-gradient(145deg, rgba(198,179,154,0.5), rgba(109,58,60,0.16));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-frame::before {
+      content: "";
+      position: absolute;
+      inset: auto -30% -30% auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(198,179,154,0.55), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 28px;
+      object-fit: cover;
+      aspect-ratio: 4 / 5;
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3vw, 3rem);
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-lead {
+      max-width: 760px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 34px;
+      font-size: 1.05rem;
+    }
+
+    .about-grid,
+    .skills-grid,
+    .projects-grid,
+    .contact-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 26px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(198,179,154,0.18), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 54px rgba(40, 11, 15, 0.22);
+      border-color: rgba(109, 58, 60, 0.28);
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-size: 1.35rem;
+    }
+
+    .card p,
+    .card li {
+      color: var(--text-soft);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .card ul {
+      padding-left: 20px;
+    }
+
+    .timeline-item + .timeline-item {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .timeline-item h4 {
+      color: var(--text);
+      font-size: 1.08rem;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item span {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(198,179,154,0.28), rgba(123,105,78,0.18));
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.97rem;
+    }
+
+    .project-card {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .project-visual {
+      height: 180px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background:
+        linear-gradient(145deg, rgba(198,179,154,0.72), rgba(109,58,60,0.75)),
+        linear-gradient(45deg, rgba(255,255,255,0.15), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .project-visual::before,
+    .project-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      background: rgba(255,255,255,0.14);
+      border-radius: 999px;
+      filter: blur(2px);
+      z-index: 1;
+    }
+
+    .project-visual::before {
+      width: 160px;
+      height: 160px;
+      top: -20px;
+      right: -30px;
+    }
+
+    .project-visual::after {
+      width: 90px;
+      height: 90px;
+      bottom: -10px;
+      left: 16px;
+    }
+
+    .project-number {
+      position: absolute;
+      left: 18px;
+      bottom: 14px;
+      font-size: 3rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: bold;
+      z-index: 2;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .project-link {
+      margin-top: 14px;
+      display: inline-block;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .contact-list p {
+      margin-bottom: 12px;
+    }
+
+    .contact-list strong {
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 34px 0 46px;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(45px) scale(0.98);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(38px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== Project Lightbox Modal ===== */
+    .project-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .project-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 8, 10, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .lightbox-box {
+      position: relative;
+      width: min(1100px, 94vw);
+      height: min(80vh, 780px);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-lightbox.active .lightbox-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .lightbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: var(--header-glass);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lightbox-title {
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 1.05rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lightbox-newtab {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      border: 1px solid var(--border);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .lightbox-newtab:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .lightbox-close {
+      border: none;
+      background: transparent;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--text);
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(109, 58, 60, 0.18);
+      color: var(--accent);
+    }
+
+    .lightbox-body {
+      position: relative;
+      flex: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lightbox-body iframe {
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      border: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .lightbox-body iframe.loaded {
+      opacity: 1;
+    }
+
+    .lightbox-loader {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--bg);
+      z-index: 1;
+    }
+
+    .lightbox-loader span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: loaderBounce 1s infinite ease-in-out;
+    }
+
+    .lightbox-loader span:nth-child(2) { animation-delay: 0.15s; }
+    .lightbox-loader span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes loaderBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Persistent fallback banner: Canva often blocks iframe embedding of
+       share links, so this stays visible any time the modal is open,
+       giving a guaranteed way to reach the design even if the preview
+       above is blank. */
+    .lightbox-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 20px;
+      background: var(--header-glass);
+      border-top: 1px solid var(--border);
+      font-size: 0.92rem;
+      color: var(--text-soft);
+      flex-wrap: wrap;
+    }
+
+    .lightbox-fallback a {
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--rubine), var(--tamarind));
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .lightbox-fallback a:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .about-grid,
+      .skills-grid,
+      .projects-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 28px;
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .mini-info {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-right {
+        gap: 10px 14px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section {
+        padding: 68px 0;
+      }
+
+      .brand {
+        font-size: 1.75rem;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .typed-wrap {
+        font-size: 1.08rem;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .lightbox-box {
+        width: 96vw;
+        height: 86vh;
+        border-radius: 16px;
+      }
+
+      .lightbox-fallback {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wipe"></div>
+  <div class="grain"></div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">Lizzy's Portfolio</div>
+
+      <div class="nav-right">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button class="toggle-btn" id="themeToggle">Dark / Light</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <span class="eyebrow">Portfolio of Liezel Antenor Nilo</span>
+
+        <h1>Hello, I'm Lizzy</h1>
+
+        <div class="typed-wrap">
+          <span id="typed-text"></span><span class="cursor"></span>
+        </div>
+
+        <p>
+          Motivated IT graduate with skills in hardware troubleshooting, software support,
+          graphic design, multimedia content creation, and creative visual communication.
+          I enjoy blending technical knowledge with design thinking to build work that is
+          both functional and visually engaging.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">View My Projects</a>
+          <a href="#contact" class="btn btn-secondary">Contact Me</a>
+        </div>
+
+        <div class="mini-info">
+          <div class="mini-card">
+            <h4>Location</h4>
+            <p>Batangas City, Philippines</p>
+          </div>
+          <div class="mini-card">
+            <h4>Email</h4>
+            <p>liezelnilooo@gmail.com</p>
+          </div>
+          <div class="mini-card">
+            <h4>Focus</h4>
+            <p>IT Support, Design, Multimedia</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="photo-frame">
+          <img src="img/liezel.jpg" alt="Portrait of Liezel Antenor Nilo" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-lead">
+        I am a Bachelor of Science in Information Technology graduate from STI College Batangas
+        with internship experience in the City Government of Batangas - City Mayor's Office,
+        Information Technology Service Division. My background combines technical support,
+        administrative assistance, multimedia work, and creative design output.
+      </p>
+
+      <div class="about-grid">
+        <div class="card">
+          <h3>Profile</h3>
+          <p>
+            I am eager to contribute to a collaborative workplace where I can continue developing
+            my skills in IT, design, and digital production. I value teamwork, active listening,
+            and producing outputs that are clear, organized, and effective.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Education & Experience</h3>
+
+          <div class="timeline-item">
+            <h4>STI College Batangas</h4>
+            <span>2022 - 2026</span>
+            <p>Bachelor of Science in Information Technology</p>
+          </div>
+
+          <div class="timeline-item">
+            <h4>Lyceum of the Philippines University</h4>
+            <span>2019 - 2022</span>
+            <p>Humanities and Social Science</p>
+          </div>
+
+          <div class="timeline-item">
+            <h4>City Government of Batangas - IT Service Division</h4>
+            <span>February 2026 - May 2026</span>
+            <p>
+              IT Intern handling onboarding IDs, staff inquiries, resource management,
+              troubleshooting system components and printers, and multimedia-related tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <h2 class="section-title">Skills & Strengths</h2>
+      <p class="section-lead">
+        My skill set reflects both technical foundations and creative execution, allowing me
+        to support users, solve problems, and design visually appealing outputs.
+      </p>
+
+      <div class="skills-grid">
+        <div class="card">
+          <h3>Technical Skills</h3>
+          <div class="skill-tags">
+            <span class="tag">Microsoft Office</span>
+            <span class="tag">Word</span>
+            <span class="tag">Excel</span>
+            <span class="tag">PowerPoint</span>
+            <span class="tag">SAP S/4 HANA</span>
+            <span class="tag">Graphic Designing</span>
+            <span class="tag">Visual Design Principles</span>
+            <span class="tag">AI & Machine Learning</span>
+            <span class="tag">Technical Support</span>
+            <span class="tag">Canva</span>
+            <span class="tag">Adobe Animate</span>
+            <span class="tag">Hardware Troubleshooting</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Soft Skills</h3>
+          <div class="skill-tags">
+            <span class="tag">Active Listening</span>
+            <span class="tag">Effective Collaboration</span>
+            <span class="tag">Teamwork</span>
+            <span class="tag">Communication</span>
+            <span class="tag">Adaptability</span>
+            <span class="tag">Creativity</span>
+            <span class="tag">Problem Solving</span>
+            <span class="tag">Organization</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <h2 class="section-title">Project Highlights</h2>
+      <p class="section-lead">
+        These selected works represent my experience in layout design, visual communication,
+        and creative output development during my internship and academic work.
+      </p>
+
+      <div class="projects-grid">
+        <div class="project-card card" data-url="https://www.canva.com/design/DAHDhjerzzM/9wdYbMcg2mk-W10fcgzPWw/view?embed">
+          <div class="project-visual">
+            <img src="img/org_chart.png" alt="Organizational Chart preview" />
+            <div class="project-number">01</div>
+          </div>
+          <h3>Organizational Chart</h3>
+          <p>
+            An org chart I made during my OJT, designed to present organizational structure
+            clearly and professionally using balanced visual hierarchy and clean layout.
+          </p>
+          <span class="project-link">Open Project</span>
+        </div>
+
+        <div class="project-card card" data-url="https://www.canva.com/design/DAG13zlvwO0/KpGRLklFSnkizN3HfcUB5A/view?embed">
+          <div class="project-visual">
+            <img src="img/storytots.png" alt="Capstone Brochure preview" />
+            <div class="project-number">02</div>
+          </div>
+          <h3>Capstone Brochure</h3>
+          <p>
+            A brochure created for our capstone project, focusing on informative layout,
+            strong readability, and polished branding presentation.
+          </p>
+          <span class="project-link">Open Project</span>
+        </div>
+
+        <div class="project-card card" data-url="https://www.canva.com/design/DAHDmY5Yw5c/RQZxiam-eWT3lhuBGIDWPg/view?embed">
+          <div class="project-visual">
+            <img src="img/logos_1.png" alt="Logo Collection preview" />
+            <div class="project-number">03</div>
+          </div>
+          <h3>Logo Collection</h3>
+          <p>
+            A selection of logos I made during my OJT, showing my exploration of identity
+            design, concept styling, and practical branding visuals.
+          </p>
+          <span class="project-link">Open Project</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-lead">
+        For internships, entry-level opportunities, creative collaborations, or design-related
+        work, here are my contact details.
+      </p>
+
+      <div class="contact-grid">
+        <div class="card contact-list">
+          <h3>Get in Touch</h3>
+          <p><strong>Name:</strong> Liezel Antenor Nilo</p>
+          <p><strong>Phone:</strong> (+63) 9763364166</p>
+          <p><strong>Email:</strong> liezelnilooo@gmail.com</p>
+          <p><strong>Address:</strong> San Antonio Village, Gulod Labak, Batangas City</p>
+        </div>
+
+        <div class="card">
+          <h3>References</h3>
+          <p><strong>Primo Anonuevo Jr. PhD</strong><br />Faculty Member<br />Phone: (+63) 9917620246</p>
+          <br />
+          <p><strong>Rico C. Cueto, LPT</strong><br />Public Elementary Teacher<br />Phone: (+63) 9914374274</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Designed with a warm editorial palette inspired by camel, boho, rubine, tamarind, and italian roast.</p>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="project-lightbox" id="projectLightbox">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-box">
+      <div class="lightbox-header">
+        <span class="lightbox-title" id="lightboxTitle">Project Preview</span>
+        <div class="lightbox-actions">
+          <a href="#" id="lightboxOpenNew" target="_blank" rel="noopener noreferrer" class="lightbox-newtab" title="Open in new tab">↗</a>
+          <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+        </div>
+      </div>
+      <div class="lightbox-body">
+        <div class="lightbox-loader" id="lightboxLoader">
+          <span></span><span></span><span></span>
+        </div>
+        <iframe id="lightboxIframe" src="" title="Project preview" loading="lazy"></iframe>
+      </div>
+      <!-- Always-visible fallback: Canva frequently blocks iframe embedding
+           of its share links, so this bar guarantees a working path to the
+           design even when the preview above stays blank. -->
+      <div class="lightbox-fallback">
+        <span>Preview not showing? Canva sometimes blocks embedded previews.</span>
+        <a href="#" id="lightboxFallbackLink" target="_blank" rel="noopener noreferrer">Open in Canva ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("themeToggle");
+    const body = document.body;
+
+    if (localStorage.getItem("lizzy-theme") === "dark") {
+      body.classList.add("dark");
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      localStorage.setItem(
+        "lizzy-theme",
+        body.classList.contains("dark") ? "dark" : "light"
+      );
+    });
+
+    const texts = [
+      "IT Graduate",
+      "Graphic Design Enthusiast",
+      "Creative Multimedia Designer",
+      "Aspiring Technical Support Professional"
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    const typedText = document.getElementById("typed-text");
+
+    function typeEffect() {
+      const current = texts[textIndex];
+
+      if (!deleting) {
+        typedText.textContent = current.slice(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(typeEffect, 1200);
+          return;
+        }
+      } else {
+        typedText.textContent = current.slice(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          deleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+        }
+      }
+
+      setTimeout(typeEffect, deleting ? 45 : 85);
+    }
+
+    typeEffect();
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    reveals.forEach((item) => revealObserver.observe(item));
+
+    /* ===== Project Lightbox Logic ===== */
+    const lightbox = document.getElementById("projectLightbox");
+    const lightboxOverlay = document.getElementById("lightboxOverlay");
+    const lightboxIframe = document.getElementById("lightboxIframe");
+    const lightboxLoader = document.getElementById("lightboxLoader");
+    const lightboxTitle = document.getElementById("lightboxTitle");
+    const lightboxOpenNew = document.getElementById("lightboxOpenNew");
+    const lightboxFallbackLink = document.getElementById("lightboxFallbackLink");
+    const lightboxClose = document.getElementById("lightboxClose");
+
+    function openLightbox(url, title) {
+      lightboxTitle.textContent = title;
+      lightboxOpenNew.href = url;
+      lightboxFallbackLink.href = url;
+      lightboxIframe.classList.remove("loaded");
+      lightboxLoader.style.display = "flex";
+      lightboxIframe.src = url;
+      lightbox.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        lightboxIframe.src = "";
+      }, 350);
+    }
+
+    document.querySelectorAll(".project-card[data-url]").forEach((card) => {
+      card.addEventListener("click", () => {
+        const url = card.getAttribute("data-url");
+        const title = card.querySelector("h3")?.textContent || "Project Preview";
+        openLightbox(url, title);
+      });
+    });
+
+    lightboxIframe.addEventListener("load", () => {
+      lightboxLoader.style.display = "none";
+      lightboxIframe.classList.add("loaded");
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightboxOverlay.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("active")) {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
